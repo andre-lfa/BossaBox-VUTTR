@@ -1,15 +1,28 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, Like } from 'typeorm';
 import Tools from '../models/Tool';
 
 export default {
     
     async index(request: Request, response: Response) {
+
+        const { tag } = request.query;
+        
         const toolsRepository = getRepository(Tools);
 
-        const tools = await toolsRepository.find();
+        if (!tag) {
+            const tools = await toolsRepository.find();
 
-        return response.status(200).json(tools);
+            return response.status(200).json(tools);
+        } else {
+            const tools = await toolsRepository.find({
+                where: [
+                    { tags: Like(`%${tag}%`) }
+                ]
+            });
+
+            return response.status(200).json(tools);
+        }        
     },
 
     async create(request: Request, response: Response) {
