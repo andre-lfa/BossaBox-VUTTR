@@ -27,5 +27,15 @@ export default {
         await toolsRepository.save(tool);
 
         return response.status(201).json(tool);
+    },
+
+    async delete(request: Request, response: Response) {
+        const { id } = request.params;
+        
+        const toolsRepository = getRepository(Tools);
+
+        toolsRepository.delete(id);
+
+        return response.status(200).json({Message: `Ferramenta com o ID ${id} deletada da base de dados.`});
     }
 }
