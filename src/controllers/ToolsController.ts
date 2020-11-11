@@ -3,6 +3,15 @@ import { getRepository } from 'typeorm';
 import Tools from '../models/Tool';
 
 export default {
+    
+    async index(request: Request, response: Response) {
+        const toolsRepository = getRepository(Tools);
+
+        const tools = await toolsRepository.find();
+
+        return response.status(200).json(tools);
+    },
+
     async create(request: Request, response: Response) {
         const { title, link, description, tags } = request.body;
 

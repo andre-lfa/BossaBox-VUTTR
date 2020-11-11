@@ -4,5 +4,6 @@ import ToolsController from './controllers/ToolsController';
 const routes = Router();
 
 routes.post('/tools', ToolsController.create);
+routes.get('/tools', ToolsController.index);
 
 export default routes;
